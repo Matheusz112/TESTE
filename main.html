@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Enviar Pacote Mágico para Ligação Remota</title>
+</head>
+<body>
+    <h1>Enviar Pacote Mágico para Ligação Remota</h1>
+    <p>E0-D5-5E-F3-F9-6F</p>
+    <label for="macAddress">Endereço MAC do Computador:</label>
+    <input type="text" id="macAddress" placeholder="Formato: XX-XX-XX-XX-XX-XX">
+    <button onclick="enviarPacoteMagico()">Enviar Pacote Mágico</button>
+
+    <script>
+        function enviarPacoteMagico() {
+            const macAddress = document.getElementById('macAddress').value;
+
+            // Envio do endereço MAC para o servidor Node.js
+            fetch(`http://127.0.0.1:3000/ligar/${macAddress}`)
+
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao enviar o pacote mágico.');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    alert(data); // Exibe uma mensagem ao usuário sobre o resultado do envio
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Ocorreu um erro ao enviar o pacote mágico.');
+                });
+        }
+    </script>
+</body>
+</html>
